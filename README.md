@@ -81,13 +81,14 @@ After starting the container, access:
 
 Tests are executed using Pytest.
 
-The current test suite checks:
+The test suite includes six tests:
 
-- API health endpoint.
-- Prediction endpoint.
-- Missing input fields.
-- Model loading.
-- Deterministic predictions.
+1. API health endpoint.
+2. Prediction endpoint.
+3. Missing input fields validation.
+4. Model loading.
+5. Deterministic predictions.
+6. Rejection of negative `tenure_months` values.
 
 Run the tests locally:
 
@@ -109,6 +110,8 @@ GitHub Actions automates the following stages:
 
 The workflow runs tests on pull requests and pushes to the main branch.
 
+Both the `test` and `docker` jobs must pass before merging pull requests into `main`.
+
 ## Docker Image
 
 **GitHub Container Registry:**
@@ -122,6 +125,14 @@ The workflow runs tests on pull requests and pushes to the main branch.
 **Image Digest:**
 
 `sha256:25e47caf6c268a114d8c9a9ea5a27f9caa474f4c77640a793b262c3c3da32421`
+
+## Branch Protection
+
+The `main` branch is protected with the following rules:
+
+- Pull requests are required before merging.
+- The `test` status check must pass.
+- The `docker` status check must pass.
 
 ## Repository
 

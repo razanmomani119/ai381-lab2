@@ -1,3 +1,4 @@
+
 from fastapi.testclient import TestClient
 from src.app.main import app
 
@@ -9,6 +10,7 @@ def test_health():
 
     assert response.status_code == 200
     assert response.json() == {"status": "ok"}
+
 
 def test_predict():
     payload = {
@@ -65,3 +67,17 @@ def test_prediction_is_deterministic():
         response1.json()["churn_probability"]
         == response2.json()["churn_probability"]
     )
+
+
+def test_negative_tenure_rejected():
+    payload = {
+        "tenure_months": -1,
+        "monthly_fee": 89.9,
+        "contract": "month-to-month",
+        "internet_service": "fiber",
+        "support_calls": 3,
+    }
+
+    response = client.post("/predict", json=payload)
+
+    assert response.status_code == 422

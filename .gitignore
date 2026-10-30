@@ -1,0 +1,8 @@
+.venv/
+.venv_twist2/
+__pycache__/
+.pytest_cache/
+.ipynb_checkpoints/
+pain_log.txt
+pain_log.txt.save
+pain_log.txt.save.1
